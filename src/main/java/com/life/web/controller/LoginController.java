@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Map;
+
 
 /**
  * packageName    : com.life.web.controller
@@ -30,10 +32,13 @@ public class LoginController {
     private final LoginService loginService;
 
     @PostMapping("")
-    public ResponseEntity<LoginVo> login(@RequestBody LoginVo loginVo) {
+    public ResponseEntity<Map<String, Object>> login(@RequestBody LoginVo loginVo) {
         try {
-            LoginVo login = loginService.login(loginVo);
-            if(login != null) {
+
+            Map<String, Object> login = loginService.login(loginVo);
+
+            //유저정보가 null이 아니면.
+            if(login.get("userInfo") != null) {
 
             }
             return ResponseEntity.status(200).build();

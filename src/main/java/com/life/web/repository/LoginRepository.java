@@ -18,5 +18,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LoginRepository {
 
+    //로그인 정보(userId) 확인
     LoginVo login(LoginVo loginVo) throws Exception;
+
+    //리프레시 토큰 발급후 해당 유저에게 저장.
+    void refreshTokenUserSave(Integer userNo) throws Exception;
+
 }

@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -38,7 +39,7 @@ public class JwtTokenProvider {
          * roles 사용자의 역할을 지정
          * 추후 사이트 규모에 따라 등급 차후지정 예정 (Enum)
          * */
-        //claims.put("roles", roles);
+        claims.put("USER", roles);
 
         Date now = new Date();
         Date validity = new Date(now.getTime() + validityInMilliseconds);
@@ -47,9 +48,35 @@ public class JwtTokenProvider {
                 .setClaims(claims) //JWT 토큰을 생성하기 위한 빌더를 시작
                 .setIssuedAt(now) //토큰 발행시간을 설정
                 .setExpiration(validity) //토큰 만료시간 설정
-                .signWith(SignatureAlgorithm.HS256, secretKey) //HS256(HMAC SHA-256) 알고리즘과 시크릿 키를 사용하여 토큰에 서명, 이 서명은 토큰의 무결성을 보장하는 데 사용됨.
+                .signWith(Keys.hmacShaKeyFor(secretKey.getBytes()), SignatureAlgorithm.HS256) //HS256(HMAC SHA-256) 알고리즘과 시크릿 키를 사용하여 토큰에 서명, 이 서명은 토큰의 무결성을 보장하는 데 사용됨.
                 .compact(); //JWT 토큰을 문자열로 변환
     }
+
+    //토큰 검증.
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token);
+            return true;
+        } catch (JwtException e) {
+            throw new IllegalArgumentException("Expired or invalid JWT token");
+        }
+    }
+
+
+    //리프레시 토큰발급
+    public String refreshToken(String refreshToken) {
+        if (validateToken(refreshToken)) {
+            Claims claims = Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(refreshToken).getBody();
+            String userId = claims.getSubject();
+            List<String> roles = claims.get("USER", List.class);
+            return createToken(userId, roles);
+        } else {
+            throw new IllegalArgumentException("Invalid refresh token");
+        }
+    }
+
+
+
 
 }
 
