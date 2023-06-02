@@ -3,6 +3,8 @@ package com.life.web.repository;
 import com.life.web.vo.LoginVo;
 import org.springframework.stereotype.Repository;
 
+import java.util.Map;
+
 /**
  * packageName    : com.life.web.repository
  * fileName       : LoginRepository
@@ -22,6 +24,6 @@ public interface LoginRepository {
     LoginVo login(LoginVo loginVo) throws Exception;
 
     //리프레시 토큰 발급후 해당 유저에게 저장.
-    void refreshTokenUserSave(Integer userNo) throws Exception;
+    void refreshTokenUserSave(Map<String, Object> userInfo) throws Exception;
 
 }

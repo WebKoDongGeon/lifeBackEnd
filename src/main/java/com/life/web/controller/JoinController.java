@@ -32,7 +32,7 @@ public class JoinController {
 
 
     @PostMapping("")
-    public ResponseEntity<Void> join(@RequestBody JoinVo joinVo) throws Exception {
+    public ResponseEntity<String> join(@RequestBody JoinVo joinVo) throws Exception {
 
         try {
             //회원Vo
@@ -44,11 +44,12 @@ public class JoinController {
             vo1.setUserPw(securityConfig.passwordEncoder().encode(joinVo.getUserPw()));
 
             joinService.join(vo1);
+            return ResponseEntity.status(200).body("회원가입을 축하합니다.");
         } catch(Exception e) {
             System.out.println(e);
+            return ResponseEntity.status(200).body("이미있는 회원입니다.");
         }
 
-        return ResponseEntity.status(200).build();
     }
 
 }

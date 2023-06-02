@@ -37,11 +37,14 @@ public class LoginController {
 
             Map<String, Object> login = loginService.login(loginVo);
 
+            System.out.println("login = " + login);
             //유저정보가 null이 아니면.
-            if(login.get("userInfo") != null) {
-
+            if(login.get("userInfo") == null) {
+                login.put("message", "회원이 아닙니다. 회원가입을 해주세요.");
             }
-            return ResponseEntity.status(200).build();
+
+            return ResponseEntity.status(200).body(login);
+
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }

@@ -22,8 +22,7 @@ public class JoinService {
 
     private final JoinRepository joinRepository;
 
-
-    public JoinVo join(JoinVo joinVo) throws Exception {
-        return joinRepository.join(joinVo);
+    public void join(JoinVo joinVo) throws Exception {
+        joinRepository.join(joinVo);
     }
 }

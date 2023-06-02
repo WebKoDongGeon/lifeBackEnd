@@ -39,21 +39,34 @@ public class LoginService {
             //회원이 입력한 userId로 일치하는 정보 찾기.
             LoginVo user = loginRepository.login(loginVo);
 
+            System.out.println("user = " + user);
             //로그인 아이디요청한 아이디의 비밀번호가 입력한 비밀번호와 같으면.
             if(passwordEncoder.matches(loginVo.getUserPw(), user.getUserPw()) ) {
                 //로그인 성공시 Jwt 토큰부여.
                 String accessToken = jwtTokenProvider.createToken(user.getUserId(), Arrays.asList("USER"));
-
-                String refreshToken = jwtTokenProvider.refreshToken(user.getUserId());
+                String createRefreshToken = null;
+                
+                if(user.getRefreshToken() == null || !jwtTokenProvider.validateToken(user.getRefreshToken())) {
+                    createRefreshToken = jwtTokenProvider.createRefreshToken(user.getUserId());
+                } else {
+                    createRefreshToken = user.getRefreshToken();
+                }
 
                 //리프레시 토큰 DB저장.
-                loginRepository.refreshTokenUserSave(user.getUserNo());
+                Map<String, Object> userUpdate = new HashMap<>();
+
+                userUpdate.put("userNo", user.getUserNo());
+                userUpdate.put("refreshToken", createRefreshToken);
+                loginRepository.refreshTokenUserSave(userUpdate);
 
 
+                LoginVo user1 = new LoginVo();
+                user1.setUserId(user.getUserId());
+                user1.setUserNo(user.getUserNo());
 
                 userInfo.put("accessToken", accessToken);
-                userInfo.put("refreshToken", refreshToken);
-                userInfo.put("userInfo", user);
+                userInfo.put("refreshToken", createRefreshToken);
+                userInfo.put("userInfo", user1);
 
             } else {
                 //로그인 실패.

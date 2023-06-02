@@ -17,5 +17,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface JoinRepository {
 
-    JoinVo join(JoinVo joinVo) throws Exception;
+    void join(JoinVo joinVo) throws Exception;
 }

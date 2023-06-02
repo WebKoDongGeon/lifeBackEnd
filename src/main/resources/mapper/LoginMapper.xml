@@ -6,8 +6,16 @@
         SELECT userNo
         , userId
         , userPw
+        , refreshToken
         FROM life_user
         WHERE 1=1
         AND userId = #{userId}
     </select>
+
+    <!-- 리프레시 토큰 유저테이블에 저장-->
+    <update id="refreshTokenUserSave">
+        UPDATE life_user
+        SET refreshToken = #{refreshToken}
+        WHERE userNo = #{userNo}
+    </update>
 </mapper>
