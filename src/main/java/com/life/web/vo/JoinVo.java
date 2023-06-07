@@ -20,9 +20,9 @@ import lombok.ToString;
 @Setter
 @ToString
 public class JoinVo {
-    Integer userNo;
-    String userId;
-    String userPw;
-    String email;
-    Character gender;
+    private Integer userNo;
+    private String userId;
+    private String userPw;
+    private String email;
+    private Character gender;
 }

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.life.web.repository.BoardRepository">
+    <select id="boardList" parameterType="com.life.web.dto.SearchDto" resultType="com.life.web.vo.BoardVo">
+        SELECT *
+        FROM life_board
+        ORDER BY boardNo DESC
+        LIMIT #{pagination.limitStart}, #{recordSize}
+
+    </select>
+
+    <select id="count" parameterType="com.life.web.dto.SearchDto" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM
+            life_board
+    </select>
+</mapper>
