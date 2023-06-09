@@ -1,5 +1,11 @@
 package com.life.web.vo;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+import java.io.File;
+
 /**
  * packageName    : com.life.web.vo
  * fileName       : BoardVo
@@ -11,6 +17,9 @@ package com.life.web.vo;
  * -----------------------------------------------------------
  * 2023/06/07        kodg       최초 생성
  */
+@Getter
+@Setter
+@ToString
 public class BoardVo {
 
     private Integer boardNo;

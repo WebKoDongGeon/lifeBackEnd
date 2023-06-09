@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.life.web.repository.BoardRepository">
+
     <select id="boardList" parameterType="com.life.web.dto.SearchDto" resultType="com.life.web.vo.BoardVo">
         SELECT *
         FROM life_board
@@ -16,4 +17,18 @@
         FROM
             life_board
     </select>
+
+    <insert id="createBoard" parameterType="com.life.web.vo.BoardVo">
+        INSERT INTO life_board (
+            title,
+            content,
+            userId,
+            regDt
+        ) values (
+             #{title},
+             #{content},
+             #{userId},
+             #{regDt}
+        )
+    </insert>
 </mapper>

@@ -5,11 +5,11 @@ import com.life.web.dto.SearchDto;
 import com.life.web.service.BoardService;
 import com.life.web.vo.BoardVo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Array;
 import java.util.ArrayList;
@@ -38,10 +38,10 @@ public class BoardController {
 
 
     @GetMapping("")
-    public ResponseEntity<PagingResponse<BoardVo>> boardList(@RequestBody SearchDto searchDto) throws Exception {
+    public ResponseEntity<PagingResponse<BoardVo>> boardList(@RequestParam(required = false) SearchDto searchDto) throws Exception {
 
         try {
-            System.out.println("다치고 망가져도나~");
+
             PagingResponse<BoardVo> list = boardService.boardList(searchDto);
 
             return ResponseEntity.status(200).body(list);
@@ -49,6 +49,16 @@ public class BoardController {
             e.printStackTrace();
             return ResponseEntity.status(500).build();
         }
-
     }
+
+    @PostMapping("")
+
+    public ResponseEntity<BoardVo> createBoard(@RequestPart("image") MultipartFile image, @RequestPart("board") BoardVo board) throws Exception {
+
+        boardService.createBoard(board, image);
+//        return new ResponseEntity<>(board, HttpStatus.CREATED);
+        return null;
+    }
+
+
 }
