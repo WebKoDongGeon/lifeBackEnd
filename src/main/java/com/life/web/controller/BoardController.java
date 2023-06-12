@@ -5,6 +5,8 @@ import com.life.web.dto.SearchDto;
 import com.life.web.service.BoardService;
 import com.life.web.vo.BoardVo;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -34,6 +36,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardController {
 
+    private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
     private final BoardService boardService;
 
 
@@ -51,10 +54,13 @@ public class BoardController {
         }
     }
 
+    /**
+     * 생성.
+     * */
     @PostMapping("")
-
-    public ResponseEntity<BoardVo> createBoard(@RequestPart("image") MultipartFile image, @RequestPart("board") BoardVo board) throws Exception {
-
+    public ResponseEntity<BoardVo> createBoard(@RequestPart(required = false, name="image") MultipartFile image, @RequestPart("board") BoardVo board) throws Exception {
+        logger.info("image : "+image);
+        logger.debug("image : "+ image);
         boardService.createBoard(board, image);
 //        return new ResponseEntity<>(board, HttpStatus.CREATED);
         return null;

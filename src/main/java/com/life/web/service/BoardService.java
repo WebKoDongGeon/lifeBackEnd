@@ -34,6 +34,7 @@ import java.util.UUID;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+//    private final ReturnFile returnFile;
 
     // 파일이 저장될 경로를 지정합니다.
     // Mac이나 Windows 환경에서 모두 동작하는 코드입니다.
@@ -76,9 +77,8 @@ public class BoardService {
             Files.copy(image.getInputStream(), tarGetFile);
             // 저장된 파일의 경로를 문자열로 반환합니다.
             String filePath = this.root.resolve(image.getOriginalFilename()).toString();
-//            System.out.println("filePath : "+filePath);
-            int startIndex = filePath.indexOf("/")+2;
-//            boardVo.(filePath.substring(startIndex));
+
+            boardVo.setImageUrl(filePath);
             boardRepository.createBoard(boardVo);
         } catch (IOException e) {
             throw new RuntimeException("Could not store the file. Error: " + e.getMessage());

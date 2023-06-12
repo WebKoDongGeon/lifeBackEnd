@@ -23,11 +23,13 @@
             title,
             content,
             userId,
+            imageUrl,
             regDt
         ) values (
              #{title},
              #{content},
              #{userId},
+             #{imageUrl},
              #{regDt}
         )
     </insert>

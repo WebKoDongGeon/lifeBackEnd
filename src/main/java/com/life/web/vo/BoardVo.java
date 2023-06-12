@@ -25,6 +25,7 @@ public class BoardVo {
     private Integer boardNo;
     private String title;
     private String content;
+    private String imageUrl;
     private String userId;
     private String regDt;
 }
