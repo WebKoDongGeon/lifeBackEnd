@@ -28,6 +28,6 @@ public interface BoardRepository {
     int count(SearchDto searchDto);
 
 
-    void createBoard (BoardVo boardVo) throws Exception;
+    void createBoard (BoardVo boardVo);
 
 }

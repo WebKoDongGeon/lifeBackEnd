@@ -58,12 +58,20 @@ public class BoardController {
      * 생성.
      * */
     @PostMapping("")
-    public ResponseEntity<BoardVo> createBoard(@RequestPart(required = false, name="image") MultipartFile image, @RequestPart("board") BoardVo board) throws Exception {
-        logger.info("image : "+image);
-        logger.debug("image : "+ image);
-        boardService.createBoard(board, image);
-//        return new ResponseEntity<>(board, HttpStatus.CREATED);
-        return null;
+    public ResponseEntity<?> createBoard(@RequestPart(required = false, name="image") MultipartFile image, @RequestPart("board") BoardVo board) throws Exception {
+        try{
+            boardService.createBoard(board, image);
+
+            if(board.getBoardNo() > 0) {
+                return ResponseEntity.status(HttpStatus.CREATED).body(board.getBoardNo());
+            } else {
+                return ResponseEntity.badRequest().body("Failed to create post");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("Failed to create post");
+        }
+
     }
 
 

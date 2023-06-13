@@ -3,6 +3,7 @@ package com.life.web.vo;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * packageName    : com.life.web.vo
@@ -17,6 +18,8 @@ import lombok.Setter;
  */
 
 @Getter
+@Setter
+@ToString
 public class FileVo {
 
     private Long fileNo;                // 파일 번호 (PK)
@@ -25,16 +28,12 @@ public class FileVo {
     private String originalName;    // 원본 파일명
     private String saveName;        // 저장 파일명
     private long size;              // 파일 크기
+    private String regDt;
 
-    @Builder
-    public FileVo(String originalName, String saveName, long size) {
+    public FileVo(String originalName, String saveName) {
         this.originalName = originalName;
         this.saveName = saveName;
-        this.size = size;
     }
 
-    public void setPostId(Long postId) {
-        this.postId = postId;
-    }
 
 }

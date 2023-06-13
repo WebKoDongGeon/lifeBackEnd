@@ -1,29 +1,24 @@
 package com.life.web.repository;
 
-import com.life.web.vo.FileVo;
+import com.life.web.vo.BoardVo;
+import com.life.web.vo.LoginVo;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
  * packageName    : com.life.web.repository
- * fileName       : FileRepository
+ * fileName       : ProfileRepository
  * author         : kodg
- * date           : 2023/06/12
- * description    : 파일업로드
+ * date           : 2023/06/13
+ * description    : 프로필 테이블 맵핑
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
- * 2023/06/12        kodg       최초 생성
+ * 2023/06/13        kodg       최초 생성
  */
-
 @Repository
-public interface FileRepository {
+public interface ProfileRepository {
 
-    /***
-     * 파일 정보 저장
-     * @param fileVo - 파일 정보
-     */
-
-    void saveFile(FileVo fileVo);
+    List<BoardVo> getProfile(String userId);
 }

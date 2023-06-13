@@ -22,10 +22,11 @@ import java.io.File;
 @ToString
 public class BoardVo {
 
-    private Integer boardNo;
+    private int boardNo;
     private String title;
     private String content;
-    private String imageUrl;
+    private String saveImageName;
+    private String originalImageName;
     private String userId;
     private String regDt;
 }

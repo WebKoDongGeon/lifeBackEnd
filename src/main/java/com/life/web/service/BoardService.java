@@ -1,10 +1,12 @@
 package com.life.web.service;
 
+import com.life.web.common.FileStore;
 import com.life.web.common.Pagination;
 import com.life.web.common.PagingResponse;
 import com.life.web.dto.SearchDto;
 import com.life.web.repository.BoardRepository;
 import com.life.web.vo.BoardVo;
+import com.life.web.vo.FileVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,6 +36,7 @@ import java.util.UUID;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final FileStore fileStore;
 //    private final ReturnFile returnFile;
 
     // 파일이 저장될 경로를 지정합니다.
@@ -58,30 +61,21 @@ public class BoardService {
     }
 
 
-    public void createBoard(BoardVo boardVo, MultipartFile image) throws Exception {
+    public void createBoard(BoardVo boardVo, MultipartFile image) throws IOException {
 
-        //루트에 디렉토리가 없을시 생성.
-        if (!Files.exists(root)) {
-            Files.createDirectories(root);
-        }
         try {
-            // 사용자가 업로드한 파일을 파일 시스템에 저장합니다.
-            // file.getInputStream()은 업로드한 파일의 내용을 읽어오는 스트림을 반환합니다.
-            // this.root.resolve(file.getOriginalFilename())은 저장될 파일의 전체 경로를 반환합니다.
-            Path tarGetFile = this.root.resolve(image.getOriginalFilename());
-            while (Files.exists(tarGetFile)) {
-                //중복파일인 경우에 랜덤숫자 추가
-                String newFileName = image.getOriginalFilename()+UUID.randomUUID();
-                tarGetFile = this.root.resolve(newFileName);
-            }
-            Files.copy(image.getInputStream(), tarGetFile);
-            // 저장된 파일의 경로를 문자열로 반환합니다.
-            String filePath = this.root.resolve(image.getOriginalFilename()).toString();
+            if(image != null) {
+                FileVo fileVo = fileStore.storeFile(image);
 
-            boardVo.setImageUrl(filePath);
+                System.out.println("fileVo : "+fileVo);
+
+                boardVo.setSaveImageName(fileVo.getSaveName());
+                boardVo.setOriginalImageName(fileVo.getOriginalName());
+            }
+
             boardRepository.createBoard(boardVo);
-        } catch (IOException e) {
-            throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

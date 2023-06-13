@@ -23,14 +23,19 @@
             title,
             content,
             userId,
-            imageUrl,
+            saveImageName,
+            originalImageName,
             regDt
         ) values (
              #{title},
              #{content},
              #{userId},
-             #{imageUrl},
+             #{saveImageName},
+             #{originalImageName},
              #{regDt}
         )
+        <selectKey keyProperty="boardNo" resultType="int" order="AFTER">
+            SELECT LAST_INSERT_ID() AS boardNo
+        </selectKey>
     </insert>
 </mapper>
