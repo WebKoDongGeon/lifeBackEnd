@@ -67,8 +67,6 @@ public class BoardService {
             if(image != null) {
                 FileVo fileVo = fileStore.storeFile(image);
 
-                System.out.println("fileVo : "+fileVo);
-
                 boardVo.setSaveImageName(fileVo.getSaveName());
                 boardVo.setOriginalImageName(fileVo.getOriginalName());
             }

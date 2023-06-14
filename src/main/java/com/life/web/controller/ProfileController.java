@@ -25,7 +25,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@Slf4j
+//@Slf4j
 @RequestMapping("/profile")
 public class ProfileController {
     private final ProfileService profileService;
@@ -34,7 +34,7 @@ public class ProfileController {
     public ResponseEntity<?> getProfile(@PathVariable String userId) {
 
         List<BoardVo> profile = profileService.getProfile(userId);
-        System.out.println(profile);
+
         return ResponseEntity.status(HttpStatus.OK).body(profile);
     }
 }

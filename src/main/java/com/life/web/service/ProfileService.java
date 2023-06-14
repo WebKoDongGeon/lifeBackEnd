@@ -25,7 +25,6 @@ public class ProfileService {
     private final ProfileRepository profileRepository;
 
     public List<BoardVo> getProfile(String userId) {
-
         return profileRepository.getProfile(userId);
     }
 }

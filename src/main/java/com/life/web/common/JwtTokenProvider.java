@@ -6,11 +6,15 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * packageName    : com.life.web.common
@@ -31,6 +35,7 @@ public class JwtTokenProvider {
     private String secretKey;
     private final long validityInMilliseconds = 365 * 24 * 60 * 60 * 1000L; // 1year
 
+
     /**
      *
      * author         : kodg
@@ -46,6 +51,10 @@ public class JwtTokenProvider {
      */
     public String createToken(String userId, List<String> roles) {
         Claims claims = Jwts.claims().setSubject(userId);
+        if (roles == null || roles.isEmpty()) {
+            throw new IllegalArgumentException("Roles must not be null or empty");
+        }
+
         /**
          * roles 사용자의 역할을 지정
          * 추후 사이트 규모에 따라 등급 차후지정 예정 (Enum)
@@ -99,11 +108,9 @@ public class JwtTokenProvider {
                     .setSigningKey(secretKey.getBytes())
                     .build()
                     .parseClaimsJws(token);
-            System.out.println("얏호");
             return true;
         } catch (JwtException | IllegalArgumentException e) {
             e.printStackTrace();
-            System.out.println("에바"+ e.getMessage());
             return false;
         }
     }
@@ -124,7 +131,11 @@ public class JwtTokenProvider {
         long validityInMilliseconds = 1000 * 60 * 60 * 24 * 7; // 7일
         Date now = new Date();
 
+        Claims claims = Jwts.claims().setSubject(userId);
+        List<String> refresh = Arrays.asList("reFresh");
+        claims.put("reFreshToken", refresh);
         return Jwts.builder()
+                .setClaims(claims)
                 .setSubject(userId) // JWT 페이로드에 사용자 아이디를 포함
                 .setIssuedAt(now) // 토큰 발행 시간 설정
                 .setExpiration(new Date(now.getTime() + validityInMilliseconds)) // 토큰 만료 시간 설정
@@ -157,6 +168,32 @@ public class JwtTokenProvider {
             // 리프레시 토큰이 유효하지 않다면 오류 메시지를 반환하거나 예외를 던집니다.
             throw new IllegalArgumentException("Invalid refresh token");
         }
+    }
+
+    public Authentication getAuthentication(String token) {
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(secretKey.getBytes()) // secretKey는 서버에서 보관하는 비밀키입니다.
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+
+        String userId = claims.getSubject();
+
+        List<String> reFreshToken = (List<String>) claims.get("reFreshToken");
+        List<String> roles;
+        if(claims.get("reFreshToken") != null && reFreshToken.get(0).equals("reFresh") ) {
+            roles = Arrays.asList("USER");
+        } else {
+            roles = null;
+        }
+        // 'roles'는 JWT 토큰에 포함된 권한 정보입니다.
+        // 'roles'는 JWT 토큰에 포함된 권한 정보입니다.
+
+        List<SimpleGrantedAuthority> authorities = roles.stream()
+                .map(role -> new SimpleGrantedAuthority(role))
+                .collect(Collectors.toList());
+
+        return new UsernamePasswordAuthenticationToken(userId, null, authorities);
     }
 }
 

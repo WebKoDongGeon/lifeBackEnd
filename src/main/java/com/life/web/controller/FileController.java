@@ -72,7 +72,7 @@ public class FileController {
 //    }
 
     @ResponseBody
-    @GetMapping("/iamges/{filename}")
+    @GetMapping("/file/{filename}")
     public Resource downloadImage(@PathVariable String filename) throws IOException {
         return new UrlResource("file:" + fileStore.getFullPath(filename));
     }

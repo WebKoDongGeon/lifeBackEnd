@@ -37,7 +37,7 @@ public class LoginController {
 
             Map<String, Object> login = loginService.login(loginVo);
 
-            System.out.println("login = " + login);
+//            System.out.println("login = " + login);
             //유저정보가 null이 아니면.
             if(login.get("userInfo") == null) {
                 login.put("message", "회원이 아닙니다. 회원가입을 해주세요.");
