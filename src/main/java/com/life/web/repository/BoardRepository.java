@@ -22,7 +22,9 @@ import java.util.List;
 @Repository
 public interface BoardRepository {
 
-    List<BoardVo> boardList(SearchDto searchDto) throws Exception;
+    List<BoardVo> boardList() throws Exception;
+
+    BoardVo boardDetail(String boardNo);
 
     //게시글 수 카운팅
     int count(SearchDto searchDto);

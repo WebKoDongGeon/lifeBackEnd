@@ -36,18 +36,25 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardController {
 
-    private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
+    private final Logger logger = LoggerFactory.getLogger(BoardController.class);
     private final BoardService boardService;
 
 
     @GetMapping("")
-    public ResponseEntity<PagingResponse<BoardVo>> boardList(@RequestParam(required = false) SearchDto searchDto) throws Exception {
-
+    public ResponseEntity<List<BoardVo>> boardList() throws Exception {
         try {
-
-            PagingResponse<BoardVo> list = boardService.boardList(searchDto);
-
+            List<BoardVo> list = boardService.boardList();
             return ResponseEntity.status(200).body(list);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).build();
+        }
+    }
+    @GetMapping("{boardNo}")
+    public ResponseEntity<BoardVo> boardDetail(@PathVariable String boardNo) throws Exception {
+        try {
+            BoardVo boardVo = boardService.boardDetail(boardNo);
+            return ResponseEntity.status(200).body(boardVo);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(500).build();

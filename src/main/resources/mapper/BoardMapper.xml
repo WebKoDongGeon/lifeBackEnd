@@ -3,12 +3,31 @@
 
 <mapper namespace="com.life.web.repository.BoardRepository">
 
-    <select id="boardList" parameterType="com.life.web.dto.SearchDto" resultType="com.life.web.vo.BoardVo">
-        SELECT *
+    <select id="boardList" resultType="com.life.web.vo.BoardVo">
+        SELECT boardNo
+        , userId
+        , title
+        , regDt
         FROM life_board
         ORDER BY boardNo DESC
-        LIMIT #{pagination.limitStart}, #{recordSize}
+    </select>
 
+    <select id="boardDetail" parameterType="String" resultType="com.life.web.vo.BoardVo">
+        SELECT
+            boardNo,
+            company,
+            title,
+            content,
+            userId,
+            skill,
+            startProject,
+            endProject,
+            saveImageName,
+            originalImageName,
+            regDt
+        FROM life_board
+        WHERE 1=1
+        AND boardNo = #{boardNo}
     </select>
 
     <select id="count" parameterType="com.life.web.dto.SearchDto" resultType="int">
@@ -20,19 +39,27 @@
 
     <insert id="createBoard" parameterType="com.life.web.vo.BoardVo">
         INSERT INTO life_board (
+            company,
             title,
             content,
             userId,
+            skill,
+            startProject,
+            endProject,
             saveImageName,
             originalImageName,
             regDt
         ) values (
-             #{title},
-             #{content},
-             #{userId},
-             #{saveImageName},
-             #{originalImageName},
-             #{regDt}
+            #{company},
+            #{title},
+            #{content},
+            #{userId},
+            #{skill},
+            #{startProject},
+            #{endProject},
+            #{saveImageName},
+            #{originalImageName},
+            #{regDt}
         )
         <selectKey keyProperty="boardNo" resultType="int" order="AFTER">
             SELECT LAST_INSERT_ID() AS boardNo

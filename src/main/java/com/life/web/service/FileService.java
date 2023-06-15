@@ -1,21 +1,12 @@
 package com.life.web.service;
 
-import com.life.web.dto.FileRequest;
 import com.life.web.repository.FileRepository;
 import com.life.web.vo.FileVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
-import java.util.UUID;
+
 
 /**
  * packageName    : com.life.web.service

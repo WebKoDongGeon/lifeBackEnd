@@ -23,8 +23,12 @@ import java.io.File;
 public class BoardVo {
 
     private int boardNo;
+    private String company;
     private String title;
     private String content;
+    private String skill;
+    private String startProject;
+    private String endProject;
     private String saveImageName;
     private String originalImageName;
     private String userId;
