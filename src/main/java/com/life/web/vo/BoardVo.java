@@ -33,4 +33,5 @@ public class BoardVo {
     private String originalImageName;
     private String userId;
     private String regDt;
+    private String modDt;
 }

@@ -81,5 +81,27 @@ public class BoardController {
 
     }
 
+    /**
+     * 수정
+     * */
+    @PutMapping("")
+    public ResponseEntity<?> updateBoard(@RequestPart(required = false, name="image") MultipartFile image, @RequestPart("board") BoardVo board) throws Exception {
+        System.out.println("image = " + image + ", board = " + board);
+
+        try{
+            boardService.updateBoard(board, image);
+
+            if(board.getBoardNo() > 0) {
+                return ResponseEntity.status(HttpStatus.CREATED).body(board.getBoardNo());
+            } else {
+                return ResponseEntity.badRequest().body("Failed to create post");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("Failed to create post");
+        }
+
+    }
+
 
 }

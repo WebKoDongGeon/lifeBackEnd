@@ -69,4 +69,19 @@ public class BoardService {
             e.printStackTrace();
         }
     }
+
+    public void updateBoard(BoardVo boardVo, MultipartFile image) throws IOException {
+        try {
+            if(image != null) {
+                FileVo fileVo = fileStore.storeFile(image);
+
+                boardVo.setSaveImageName(fileVo.getSaveName());
+                boardVo.setOriginalImageName(fileVo.getOriginalName());
+            }
+
+            boardRepository.updateBoard(boardVo);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
