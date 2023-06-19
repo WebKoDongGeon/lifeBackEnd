@@ -89,12 +89,12 @@ public class BoardController {
         System.out.println("image = " + image + ", board = " + board);
 
         try{
-            boardService.updateBoard(board, image);
+            int result = boardService.updateBoard(board, image);
 
-            if(board.getBoardNo() > 0) {
-                return ResponseEntity.status(HttpStatus.CREATED).body(board.getBoardNo());
+            if(result != 0) {
+                return ResponseEntity.status(HttpStatus.CREATED).body("수정 완료");
             } else {
-                return ResponseEntity.badRequest().body("Failed to create post");
+                return ResponseEntity.badRequest().body("수정 실패");
             }
         } catch (Exception e) {
             e.printStackTrace();

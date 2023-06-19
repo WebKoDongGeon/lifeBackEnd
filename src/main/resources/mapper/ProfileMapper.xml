@@ -6,10 +6,13 @@
     <select id="getProfile" parameterType="java.lang.String" resultType="com.life.web.vo.BoardVo">
         SELECT boardNo
         , title
+        , company
         , content
         , userId
         , saveImageName
         , originalImageName
+        , DATE_FORMAT(startProject, '%Y-%m-%d') as startProject
+        , DATE_FORMAT(endProject, '%Y-%m-%d') as endProject
         , regDt
         FROM life_board
         WHERE 1=1

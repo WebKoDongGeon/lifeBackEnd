@@ -57,6 +57,7 @@ public class BoardService {
     public void createBoard(BoardVo boardVo, MultipartFile image) throws IOException {
 
         try {
+
             if(image != null) {
                 FileVo fileVo = fileStore.storeFile(image);
 
@@ -70,7 +71,8 @@ public class BoardService {
         }
     }
 
-    public void updateBoard(BoardVo boardVo, MultipartFile image) throws IOException {
+    public int updateBoard(BoardVo boardVo, MultipartFile image) throws IOException {
+        int result = 0;
         try {
             if(image != null) {
                 FileVo fileVo = fileStore.storeFile(image);
@@ -79,9 +81,11 @@ public class BoardService {
                 boardVo.setOriginalImageName(fileVo.getOriginalName());
             }
 
-            boardRepository.updateBoard(boardVo);
+            result = boardRepository.updateBoard(boardVo);
+            return result;
         } catch (Exception e) {
             e.printStackTrace();
+            return  result;
         }
     }
 }

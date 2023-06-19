@@ -37,6 +37,35 @@
             life_board
     </select>
 
+    <insert id="createBoard" parameterType="com.life.web.vo.BoardVo">
+        INSERT INTO life_board (
+        company,
+        title,
+        content,
+        userId,
+        skill,
+        startProject,
+        endProject,
+        saveImageName,
+        originalImageName,
+        regDt
+        ) values (
+        #{company},
+        #{title},
+        #{content},
+        #{userId},
+        #{skill},
+        #{startProject},
+        #{endProject},
+        #{saveImageName},
+        #{originalImageName},
+        #{regDt}
+        )
+        <selectKey keyProperty="boardNo" resultType="int" order="AFTER">
+            SELECT LAST_INSERT_ID() AS boardNo
+        </selectKey>
+    </insert>
+
     <update id="updateBoard" parameterType="com.life.web.vo.BoardVo">
         UPDATE life_board
         SET company = #{company},
@@ -50,9 +79,5 @@
             originalImageName = #{originalImageName},
             modDt = #{modDt}
         WHERE boardNo = #{boardNo}
-        )
-        <selectKey keyProperty="boardNo" resultType="int" order="AFTER">
-            SELECT LAST_INSERT_ID() AS boardNo
-        </selectKey>
     </update>
 </mapper>

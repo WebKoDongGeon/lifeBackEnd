@@ -32,6 +32,6 @@ public interface BoardRepository {
 
     void createBoard (BoardVo boardVo);
 
-    void updateBoard (BoardVo boardVo);
+    int updateBoard (BoardVo boardVo);
 
 }
