@@ -34,4 +34,6 @@ public interface BoardRepository {
 
     int updateBoard (BoardVo boardVo);
 
+    int deleteBoard(String boardNo);
+
 }

@@ -55,9 +55,7 @@ public class BoardService {
 
 
     public void createBoard(BoardVo boardVo, MultipartFile image) throws IOException {
-
         try {
-
             if(image != null) {
                 FileVo fileVo = fileStore.storeFile(image);
 
@@ -88,4 +86,17 @@ public class BoardService {
             return  result;
         }
     }
+
+    public int deleteBoard(String boardNo) throws IOException {
+        int result = 0;
+        try {
+            result = boardRepository.deleteBoard(boardNo);
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return  result;
+        }
+    }
+
+
 }

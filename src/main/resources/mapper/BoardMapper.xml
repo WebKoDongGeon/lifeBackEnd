@@ -80,4 +80,9 @@
             modDt = #{modDt}
         WHERE boardNo = #{boardNo}
     </update>
+
+    <delete id="deleteBoard" parameterType="String" >
+        DELETE FROM life_board
+        WHERE boardNo = #{boardNo}
+    </delete>
 </mapper>

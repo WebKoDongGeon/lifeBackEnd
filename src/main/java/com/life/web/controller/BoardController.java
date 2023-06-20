@@ -103,5 +103,25 @@ public class BoardController {
 
     }
 
+    /**
+     * 삭제
+     * */
+    @DeleteMapping("{boardNo}")
+    public ResponseEntity<?> deleteBoard(@PathVariable String boardNo) throws Exception {
+        try{
+            int result = boardService.deleteBoard(boardNo);
+
+            if(result != 0) {
+                return ResponseEntity.status(HttpStatus.CREATED).body("삭제 완료");
+            } else {
+                return ResponseEntity.badRequest().body("삭제 실패");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("Failed to create post");
+        }
+
+    }
+
 
 }
