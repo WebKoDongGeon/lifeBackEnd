@@ -19,6 +19,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static java.lang.Double.isNaN;
+import static java.lang.Integer.parseInt;
+
 /**
  * packageName    : com.life.web.controller
  * fileName       : BoardController
@@ -51,13 +54,16 @@ public class BoardController {
         }
     }
     @GetMapping("{boardNo}")
-    public ResponseEntity<BoardVo> boardDetail(@PathVariable String boardNo) throws Exception {
+    public ResponseEntity<?> boardDetail(@PathVariable String boardNo) throws Exception {
         try {
+            System.out.println("boardNo : "+boardNo);
+            Integer.parseInt(boardNo);
+
             BoardVo boardVo = boardService.boardDetail(boardNo);
             return ResponseEntity.status(200).body(boardVo);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(500).build();
+            return ResponseEntity.status(204).build();
         }
     }
 
