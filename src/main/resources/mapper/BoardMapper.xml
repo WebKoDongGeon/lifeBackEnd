@@ -20,8 +20,8 @@
             content,
             userId,
             skill,
-            startProject,
-            endProject,
+            DATE_FORMAT(startProject, '%Y-%m-%d') as startProject,
+            DATE_FORMAT(endProject, '%Y-%m-%d') as endProject,
             saveImageName,
             originalImageName,
             regDt
