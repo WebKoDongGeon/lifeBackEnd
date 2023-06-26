@@ -6,15 +6,19 @@
         INSERT INTO life_user
         (
             userId,
+            userName,
             userPw,
             email,
-            gender
+            gender,
+            refreshToken
         )
         VALUES (
             #{userId},
+            #{userName},
             #{userPw},
             #{email},
-            #{gender}
+            #{gender},
+            ''
         )
     </insert>
 </mapper>

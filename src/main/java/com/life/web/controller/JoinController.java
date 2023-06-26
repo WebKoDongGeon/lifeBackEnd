@@ -40,6 +40,7 @@ public class JoinController {
 
             vo1.setGender(joinVo.getGender());
             vo1.setUserId(joinVo.getUserId());
+            vo1.setUserName(joinVo.getUserName());
             vo1.setEmail(joinVo.getEmail());
             vo1.setUserPw(securityConfig.passwordEncoder().encode(joinVo.getUserPw()));
 

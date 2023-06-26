@@ -22,7 +22,9 @@ import lombok.ToString;
 public class JoinVo {
     private Integer userNo;
     private String userId;
+    private String userName;
     private String userPw;
     private String email;
     private Character gender;
+    private String refreshToken;
 }

@@ -5,6 +5,7 @@
     <select id="login" parameterType="com.life.web.vo.LoginVo" resultType="com.life.web.vo.LoginVo">
         SELECT userNo
         , userId
+        , userName
         , userPw
         , refreshToken
         FROM life_user

@@ -1,6 +1,7 @@
 package com.life.web.controller;
 
 import com.life.web.service.MyPageService;
+import com.life.web.vo.UserVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +31,9 @@ public class MyPageController {
     @GetMapping("{userNo}")
     public ResponseEntity<?> myPage(@PathVariable String userNo) {
 
+        UserVo userVo = myPageService.myPage(userNo);
+
+        System.out.println("userVo = " + userVo);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

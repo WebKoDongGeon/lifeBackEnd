@@ -23,6 +23,7 @@ public class LoginVo {
 
     private Integer userNo;
     private String userId;
+    private String userName;
     private String userPw;
     private String refreshToken;
 

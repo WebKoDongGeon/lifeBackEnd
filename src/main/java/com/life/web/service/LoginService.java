@@ -63,6 +63,7 @@ public class LoginService {
                 LoginVo user1 = new LoginVo();
                 user1.setUserId(user.getUserId());
                 user1.setUserNo(user.getUserNo());
+                user1.setUserName(user.getUserName());
                 user1.setRefreshToken(createRefreshToken);
 
                 userInfo.put("accessToken", accessToken);
