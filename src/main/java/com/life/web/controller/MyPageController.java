@@ -34,6 +34,6 @@ public class MyPageController {
         UserVo userVo = myPageService.myPage(userNo);
 
         System.out.println("userVo = " + userVo);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.OK).body(userVo);
     }
 }
